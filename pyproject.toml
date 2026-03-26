@@ -1,0 +1,12 @@
+[project]
+name = "youtube-watch-later"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "fastapi[standard]>=0.135.2",
+    "httpx>=0.28.1",
+    "sqlmodel>=0.0.37",
+]
