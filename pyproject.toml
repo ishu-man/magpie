@@ -1,7 +1,7 @@
 [project]
-name = "youtube-watch-later"
+name = "magpie"
 version = "0.1.0"
-description = "Add your description here"
+description = "magpie will turn my WL playlist into a categorized library"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
