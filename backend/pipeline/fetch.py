@@ -4,6 +4,7 @@ import httpx
 from dotenv import load_dotenv
 from datetime import datetime
 from app.models import Video, VideoData
+from .embed import get_hashtags
 
 load_dotenv()
 
@@ -107,11 +108,20 @@ async def get_videos_list(fetched_videos: dict[str, VideoData]) -> list[Video]:
                 video_data: VideoData = fetched_videos[video_id]
                 video_data.duration = str(item['contentDetails']['duration'])
                 video_data.view_count = int(item['statistics']['viewCount'])
+                hashtags = get_hashtags(video_data.description) # extract hashtags if present in description
+                # for description_tag in hashtags:
+                #         tags.append(description_tag)
+                #     video_data.tags = tags
+ 
                 try:
                     # A video may or may not have tags
-                    video_data.tags = item['snippet']['tags'] 
+                    tags = item['snippet']['tags']
+                    if hashtags != []:
+                        for description_tag in hashtags:
+                            tags.append(description_tag)
+                    video_data.tags = tags
                 except KeyError:
-                    video_data.tags = ['']
+                    video_data.tags = [''] if hashtags == [] else hashtags
 
                 category_id = int(item['snippet']['categoryId'])
                 video_data.category = CATEGORIES[category_id]
